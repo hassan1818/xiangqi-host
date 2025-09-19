@@ -14,6 +14,7 @@ interface AuthState {
   error: string | null;
 }
 
+// Describing the structure of possible API error responses
 interface ApiError {
   response?: {
     data?: {
@@ -36,7 +37,7 @@ const getErrorMessage = (error: unknown): string => {
     return apiError.response?.data?.message || "An error occurred";
   }
   if (error && typeof error === "object" && "message" in error) {
-    return (error as { message: string }).message;
+    return (error as { message: string }).message; // Extract message from Error object
   }
   if (typeof error === "string") {
     return error;
@@ -114,6 +115,7 @@ export const login = createAsyncThunk(
   }
 );
 
+// ✔ Logout
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
   try {
     await API.post("/auth/logout");
