@@ -115,6 +115,46 @@ export const login = createAsyncThunk(
   }
 );
 
+// ✅ Get current user (check auth status)
+export const getCurrentUser = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await API.get("/users/me"); // Endpoint to get current user info
+      console.log("Current user response:", res.data);
+      
+      // Return user data from response
+      if (res.data.user) {
+        return res.data.user as User;
+      } else if (res.data.data && res.data.data.user) {
+        return res.data.data.user as User;
+      } else if (res.data.id && res.data.email) {
+        return res.data as User;
+      }
+      
+      return null;
+    } catch (error: unknown) {
+      return rejectWithValue(getErrorMessage(error) || "Failed to get user info");
+    }
+  }
+);
+
+// ✅ Refresh Token
+export const refreshToken = createAsyncThunk(
+  "auth/refreshToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await API.post("/auth/refresh-token");
+      console.log("Refresh token response:", res.data);
+      
+      // Return success message - actual tokens are in HTTP-only cookies
+      return { message: "Token refreshed successfully" };
+    } catch (error: unknown) {
+      return rejectWithValue(getErrorMessage(error) || "Token refresh failed");
+    }
+  }
+);
+
 // ✔ Logout
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
   try {
@@ -162,6 +202,36 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+
+      // Get current user
+      .addCase(getCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.user = null; // Clear user if auth check fails
+      })
+
+      // Refresh token
+      .addCase(refreshToken.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(refreshToken.fulfilled, (state) => {
+        state.loading = false;
+        // Token refreshed successfully - no state changes needed as tokens are in cookies
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.user = null; // Clear user if refresh fails
       })
 
       .addCase(logout.fulfilled, (state) => {

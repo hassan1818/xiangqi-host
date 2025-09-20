@@ -1,7 +1,11 @@
-
+import PlaySideBar from "@/components/PlaySideBar/PlaySideBar"
+import Welcome from "./Welcome"
 function PlayXiangqi() {
   return (
-    <div>PlayXiangqi</div>
+    <div>
+      <PlaySideBar />
+      <Welcome />
+    </div>
   )
 }
 
