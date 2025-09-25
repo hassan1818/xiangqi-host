@@ -35,7 +35,7 @@ function PlaySideBar() {
   
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   // Get current user on component mount
   useEffect(() => {
@@ -69,7 +69,7 @@ function PlaySideBar() {
       toast.success("Logged out successfully");
       navigate("/signin");
     } catch (error) {
-      toast.error("Logout failed");
+      toast.error(`Logout failed ${error}`, );
     }
   };
 
@@ -274,7 +274,7 @@ function PlaySideBar() {
             onMouseLeave={() => setShowPlaySubmenu(false)}
           >
             <button 
-              onClick={() => handleNavigation('/play')}
+              onClick={() => handleNavigation('/play-xiangqi/play')}
               className="flex items-center justify-between px-6 py-3 hover:bg-red-600 transition w-full cursor-pointer"
               title={isCollapsed ? "Play" : ""}
             >
@@ -289,7 +289,7 @@ function PlaySideBar() {
             {showPlaySubmenu && !isCollapsed && (
               <div className="absolute left-64 top-0 w-64 bg-[#f5f5f5] text-red-600 shadow-xl rounded-r-lg z-60">
                 <div className="py-2">
-                  <button onClick={() => handleNavigation('/play-online')} className="flex items-center gap-3 px-6 py-3 hover:bg-red-50 transition w-full text-left cursor-pointer">
+                  <button onClick={() => handleNavigation('/play-xiangqi/play')} className="flex items-center gap-3 px-6 py-3 hover:bg-red-50 transition w-full text-left cursor-pointer">
                     <Monitor className="w-5 h-5 text-red-500" />
                     <span className="font-medium">Play Online</span>
                   </button>

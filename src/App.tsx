@@ -10,6 +10,7 @@ import PlayXiangqi from "./pages/PlayXiangqi";
 import Play from "./pages/Play";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Game from "./pages/Game";
 
 function App() {
   return (
@@ -35,9 +36,10 @@ function App() {
           <Route path="/puzzles" element={<div className="p-8"><h1 className="text-2xl font-bold">Puzzles Page</h1></div>} />
           <Route path="/lessons" element={<div className="p-8"><h1 className="text-2xl font-bold">Lessons Page</h1></div>} />
           <Route path="/inbox" element={<div className="p-8"><h1 className="text-2xl font-bold">Inbox Page</h1></div>} />
+          <Route path="/play-xiangqi/play/game" element={<Game />} />
           
           {/* Submenu routes */}
-          <Route path="/play-online" element={<div className="p-8"><h1 className="text-2xl font-bold">Play Online</h1></div>} />
+          <Route path="/play-xiangqi/play" element={<Play />} />
           <Route path="/play-computer" element={<div className="p-8"><h1 className="text-2xl font-bold">Play Computer</h1></div>} />
           <Route path="/watch-games" element={<div className="p-8"><h1 className="text-2xl font-bold">Watch Games</h1></div>} />
           <Route path="/tournaments" element={<div className="p-8"><h1 className="text-2xl font-bold">Tournaments</h1></div>} />
