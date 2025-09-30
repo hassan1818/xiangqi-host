@@ -1,6 +1,7 @@
 import { Monitor, Bot, Puzzle, GraduationCap, Tv } from "lucide-react";
-
+import { useNavigate } from "react-router-dom"
 function Welcome() {
+  const navigate = useNavigate()
   return (
     <div className="h-screen bg-[#f5f3f0] flex flex-col items-center justify-start pt-2 md:pt-6 overflow-hidden px-4 md:px-8">
       <div className="max-w-2xl w-full">
@@ -18,10 +19,11 @@ function Welcome() {
         <div className="space-y-2 md:space-y-3">
           {/* Play Online */}
           <button 
-            className="w-full bg-transparent border-2 border-red-300 rounded-lg p-3 md:p-4 flex items-center gap-3 hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm"
+            className="w-full bg-transparent border-2 border-red-300 rounded-lg p-3 md:p-4 flex items-center gap-3 hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm cursor-pointer"
             onClick={() => {
-              console.log("Navigate to Play Online");
+              navigate("/play-xiangqi/play")
             }}
+            
           >
             <div className="w-8 h-8 md:w-10 md:h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Monitor className="w-4 h-4 md:w-5 md:h-5 text-red-600" />
